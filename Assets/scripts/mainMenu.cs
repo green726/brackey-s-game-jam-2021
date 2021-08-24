@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class mainMenu : MonoBehaviour
 {
     //! instead of setactive make the button not interactble and change the image to UImask. 
-    public GameObject l1button;
-    public GameObject l2button;
-    public GameObject l3button;
-    public GameObject l4button;
-    public GameObject l5button;
+    public GameObject[] levelButtons;
     // Start is called before the first frame update
     void Start()
     {
-        l2button.SetActive(false);
-        l3button.SetActive(false);
-        l4button.SetActive(false);
-        l5button.SetActive(false);
+        //loop through array of level buttons
+        foreach (GameObject buttonOb in levelButtons)
+        {
+            //disable all buttons by default except for level 1
+            if (buttonOb.name.Contains("1") == false)
+            {
+                buttonOb.GetComponent<Button>().interactable = false;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -30,13 +33,23 @@ public class mainMenu : MonoBehaviour
         //get saved player data
         playerData gameData = saveGame.loadGameData();
         //loop through buttons for levels that player has made it to and unlock them
-        Debug.Log(gameData.playerLevelInt);
-        for (int i = 1; i <= int.Parse(gameData.playerLevelInt); i++)
+
+        foreach (GameObject buttonOb in levelButtons)
         {
-            string level = i.ToString();
-            string buttonName = "game" + level + "Button";
-            Debug.Log(buttonName);
-            GameObject.Find(buttonName).SetActive(true);
+
+            string buttonLevelTest = buttonOb.name.Replace("game", "").Replace("Button", "");
+            Debug.Log("buttonTest:" + buttonLevelTest);
+            //get the level int from the button name, do this by removing "button" and "game"
+            int buttonLevel = int.Parse(buttonOb.name.Replace("game", "").Replace("Button", ""));
+            //if the button level is less than or equal to player level unlock it
+            if (buttonLevel <= gameData.playerLevelInt)
+            {
+                buttonOb.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                break;
+            }
         }
 
     }

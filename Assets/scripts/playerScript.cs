@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 //TODO: when slide move the head position down, and back up after slide finish
 public class playerScript : MonoBehaviour
 {
-    public string playerLevelInt;
+    public int playerLevelInt;
     public string playerLevelString;
     public Scene currentScene;
     public string[] collectedPowerUps;
@@ -56,8 +56,9 @@ public class playerScript : MonoBehaviour
         coll = GetComponent<CapsuleCollider>();
         currentScene = SceneManager.GetActiveScene();
         playerLevelString = currentScene.name;
-        playerLevelInt = currentScene.name.Replace("game", "");
+        playerLevelInt = int.Parse(currentScene.name.Replace("game", ""));
         Debug.Log(playerLevelInt);
+        saveGame.performSave(GetComponent<playerScript>());
     }
 
     // Update is called once per frame

@@ -1877,11 +1877,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3eca378a2bdda48b919a379f3e271e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  l1button: {fileID: 372118206}
-  l2button: {fileID: 575794577}
-  l3button: {fileID: 250609918}
-  l4button: {fileID: 142928215}
-  l5button: {fileID: 1976548802}
+  levelButtons:
+  - {fileID: 372118206}
+  - {fileID: 575794577}
+  - {fileID: 250609918}
+  - {fileID: 142928215}
+  - {fileID: 1976548802}
 --- !u!114 &1442604651
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine;
 public class playerData
 {
     public string playerLevelString;
-    public string playerLevelInt;
+    public int playerLevelInt;
     public string[] unlockedPowerUps;
 
     public playerData(playerScript player) {
