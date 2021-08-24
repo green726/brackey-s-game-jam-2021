@@ -4,12 +4,18 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 //TODO: when slide move the head position down, and back up after slide finish
 public class playerScript : MonoBehaviour
 {
+    public string playerLevelInt;
+    public string playerLevelString;
+    public Scene currentScene;
+    public string[] collectedPowerUps;
+    public float baseSensMult = 100;
     public float speedMult = 7;
-    public float mouseXmult = 1;
-    public float mouseYmult = 1;
+    public float mouseSens = 1;
     public GameObject cam;
     public CinemachineVirtualCamera virCam;
     public CinemachinePOV pov;
@@ -25,9 +31,22 @@ public class playerScript : MonoBehaviour
     public Rigidbody rb;
     public CapsuleCollider coll;
     public Transform head;
+    public LayerMask wallMask;
+    public float wallrunForce, maxWallRunTime, maxWallrunSpeed;
+    bool isWallLeft, isWallRight, isWallRunning;
+    public float maxWallrunCamTilt, wallRunCamTilt;
+    public bool isPaused = false;
+    public menuSystem menuScript;
+    public GameObject escMenu;
+    public GameObject optionsMenu;
+    public GameObject sensSlider;
+    public GameObject sensText;
     // Start is called before the first frame update
     void Start()
     {
+
+        escMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cam = GameObject.Find("playerCam");
@@ -35,12 +54,27 @@ public class playerScript : MonoBehaviour
         pov = virCam.GetCinemachineComponent<CinemachinePOV>();
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<CapsuleCollider>();
+        currentScene = SceneManager.GetActiveScene();
+        playerLevelString = currentScene.name;
+        playerLevelInt = currentScene.name.Replace("game", "");
+        Debug.Log(playerLevelInt);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        //mouse input and player rotation
+        float mouseX = Input.GetAxis("Mouse X") * mouseSens;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
+
+        pov.m_HorizontalAxis.m_InputAxisValue = mouseX;
+        pov.m_VerticalAxis.m_InputAxisValue = mouseY;
+        Quaternion rotateAmount = Quaternion.Euler(0, pov.m_HorizontalAxis.Value, 0);
+        transform.rotation = rotateAmount;
+        //transform.Rotate(0, mouseX, 0);
+     
+
+
         //stamina
         if (stamina < 0f)
         {
@@ -105,8 +139,19 @@ public class playerScript : MonoBehaviour
             Vector3 headUp = new Vector3(0, .7f, 0);
             head.Translate(headUp);
         }
-
-
+        //menus
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuScript.escMenuOpen == true)
+            {
+                menuScript.closeEsc();
+            } else if (menuScript.escMenuOpen == false)
+            {
+                menuScript.openEsc();
+            }
+            
+        }
+        
 
     }
   
@@ -114,14 +159,14 @@ public class playerScript : MonoBehaviour
 
     void FixedUpdate()
     {
+       
         sprinting = false;
 
         //groundChecking
         touchingGround = Physics.CheckSphere(bottom.position, .2f, groundLMask);
-        //mouse input and player rotation
+       
 
-        Quaternion rotateAmount = Quaternion.Euler(0, pov.m_HorizontalAxis.Value, 0);
-        transform.rotation = rotateAmount;
+    
 
         //player movement
         
