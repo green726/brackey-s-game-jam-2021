@@ -56,14 +56,28 @@ public class playerScript : MonoBehaviour
         coll = GetComponent<CapsuleCollider>();
         currentScene = SceneManager.GetActiveScene();
         playerLevelString = currentScene.name;
-        playerLevelInt = int.Parse(currentScene.name.Replace("game", ""));
+        if (currentScene.name.Contains("game"))
+        {
+            playerLevelInt = int.Parse(currentScene.name.Replace("game", ""));
+            saveGame.performSave(GetComponent<playerScript>());
+        }
+        else
+        {
+            playerLevelInt = 99;
+        }
+        
         Debug.Log(playerLevelInt);
-        saveGame.performSave(GetComponent<playerScript>());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+        sprinting = false;
+        //groundChecking
+        touchingGround = Physics.CheckSphere(bottom.position, .1f, groundLMask);
+       
         //mouse input and player rotation
         float mouseX = Input.GetAxis("Mouse X") * mouseSens;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
@@ -93,7 +107,7 @@ public class playerScript : MonoBehaviour
         if (Input.GetKeyDown("space") && touchingGround == true && stamina >= 10)
         {
 
-            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
             stamina -= 10f;
         }
 
@@ -111,7 +125,7 @@ public class playerScript : MonoBehaviour
         }
 
         //sliding
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Mouse4) && touchingGround == true && stamina >= 5)
+        if (touchingGround == true && stamina >= 5 && Input.GetKeyDown(KeyCode.LeftControl) || touchingGround == true && stamina >= 5 && Input.GetKeyDown(KeyCode.Mouse4))
         {
             playerSlide();
         }
@@ -160,16 +174,7 @@ public class playerScript : MonoBehaviour
 
     void FixedUpdate()
     {
-       
-        sprinting = false;
-
-        //groundChecking
-        touchingGround = Physics.CheckSphere(bottom.position, .2f, groundLMask);
-       
-
-    
-
-        //player movement
+            //player movement
         
                 float xVal = Input.GetAxis("Horizontal");
                 float zVal = Input.GetAxis("Vertical");
