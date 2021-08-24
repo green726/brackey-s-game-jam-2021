@@ -1717,6 +1717,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &884082070 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3121460013780090336, guid: 161f7236b5422554095b5af7feeedcd3, type: 3}
+  m_PrefabInstance: {fileID: 3121460015128097410}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &890521911
 GameObject:
   m_ObjectHideFlags: 0
@@ -5193,6 +5204,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 29931482}
+    - target: {fileID: 3121460013780090336, guid: 161f7236b5422554095b5af7feeedcd3, type: 3}
+      propertyPath: m_Lens.Dutch
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3121460013780090337, guid: 161f7236b5422554095b5af7feeedcd3, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5249,6 +5264,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAxis.m_InputAxisName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3121460014862623905, guid: 161f7236b5422554095b5af7feeedcd3, type: 3}
+      propertyPath: m_Damping
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 161f7236b5422554095b5af7feeedcd3, type: 3}
 --- !u!1001 &3413462826477465778
@@ -5266,6 +5285,10 @@ PrefabInstance:
       propertyPath: orient
       value: 
       objectReference: {fileID: 114235429}
+    - target: {fileID: 3413462826109616999, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
+      propertyPath: virCam
+      value: 
+      objectReference: {fileID: 884082070}
     - target: {fileID: 3413462826109616999, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: escMenu
       value: 
@@ -5304,7 +5327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3413462826109616999, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: maxWallrunCamTilt
-      value: 30
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3413462826109616999, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: wallJumpUpOffSpeed

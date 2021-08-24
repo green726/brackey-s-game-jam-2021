@@ -104,7 +104,7 @@ public class playerScript : MonoBehaviour
         //wall run:
         checkForWall();
         wallRunInput();
-
+        //wall run cam tilt activate
         if (Mathf.Abs(wallRunCamTilt) < maxWallrunCamTilt && isWallRunning && isWallRight)
         {
             wallRunCamTilt += Time.deltaTime * maxWallrunCamTilt * 2;
@@ -113,13 +113,27 @@ public class playerScript : MonoBehaviour
         {
             wallRunCamTilt -= Time.deltaTime * maxWallrunCamTilt * 2;
         }
+        //tilt wall run cam back
+        if (wallRunCamTilt > 0 && !isWallRight && !isWallLeft)
+        {
+            wallRunCamTilt -= Time.deltaTime * maxWallrunCamTilt * 2;
+        }
+        if (wallRunCamTilt < 0 && !isWallRight && !isWallLeft)
+        {
+            wallRunCamTilt += Time.deltaTime * maxWallrunCamTilt * 2;
+        }
+
+
 
         //mouse input and player rotation
         float mouseX = Input.GetAxis("Mouse X") * mouseSens;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
 
+        virCam.m_Lens.Dutch = wallRunCamTilt;
         pov.m_HorizontalAxis.m_InputAxisValue = mouseX;
         pov.m_VerticalAxis.m_InputAxisValue = mouseY;
+        Debug.Log(wallRunCamTilt);
+        
         Quaternion rotateAmount = Quaternion.Euler(0, pov.m_HorizontalAxis.Value, 0);
         transform.rotation = rotateAmount;
 
