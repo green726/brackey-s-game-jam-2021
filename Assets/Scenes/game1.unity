@@ -3900,7 +3900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808e3e71391ae1c4dbee986b4ba3df37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLevel: 
+  playerLevelInt: 0
+  playerLevelString: 
   currentScene:
     m_Handle: 0
   collectedPowerUps: []
@@ -3916,6 +3917,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   jumpSpeed: 6
+  wallJumpOffSpeed: 7
+  wallJumpUpOffSpeed: 1
   slideSpeed: 6
   stamina: 100
   staminaDisplay: {fileID: 0}
@@ -3927,11 +3930,12 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 0
-  wallrunForce: 0
+  wallRunForce: 6
   maxWallRunTime: 0
-  maxWallrunSpeed: 0
+  maxWallRunSpeed: 7
   maxWallrunCamTilt: 0
   wallRunCamTilt: 0
+  orient: {fileID: 0}
   isPaused: 0
   menuScript: {fileID: 0}
   escMenu: {fileID: 0}
