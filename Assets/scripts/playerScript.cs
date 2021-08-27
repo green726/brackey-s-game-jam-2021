@@ -67,7 +67,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        stamina = 100f;
         escMenu.SetActive(false);
         optionsMenu.SetActive(false);
         Cursor.visible = false;
@@ -132,7 +132,6 @@ public class playerScript : MonoBehaviour
         virCam.m_Lens.Dutch = wallRunCamTilt;
         pov.m_HorizontalAxis.m_InputAxisValue = mouseX;
         pov.m_VerticalAxis.m_InputAxisValue = mouseY;
-        Debug.Log(wallRunCamTilt);
         
         Quaternion rotateAmount = Quaternion.Euler(0, pov.m_HorizontalAxis.Value, 0);
         transform.rotation = rotateAmount;
@@ -146,9 +145,9 @@ public class playerScript : MonoBehaviour
             stamina = 0f;
         }
 
-        if (stamina < 25f)
+        if (stamina < 100f)
         {
-            stamina += 1f * Time.deltaTime * 4;
+            stamina += 2f * Time.deltaTime * 4;
         }
 
         staminaDisplay.text = "Stamina: " + Mathf.Round(stamina);
