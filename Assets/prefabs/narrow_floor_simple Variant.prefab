@@ -27,7 +27,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transf: {fileID: 0}
   collid: {fileID: 0}
-  playerOb: {fileID: 0}
+  playerOb: {fileID: 7756174829884614987, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
   playerLeft: 0
   otherGameOb: {fileID: 0}
   nameOfOther: 
@@ -84,7 +84,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4394a242f279f64ca5a55096372d977, type: 3}
       propertyPath: m_Name
-      value: narrow_floor_simple
+      value: narrow_floor_simple Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4394a242f279f64ca5a55096372d977, type: 3}
       propertyPath: m_Layer

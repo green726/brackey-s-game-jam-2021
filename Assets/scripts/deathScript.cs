@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class powerUpScript : MonoBehaviour
+public class deathScript : MonoBehaviour
 {
-    public playerScript playerScr;
+    public menuSystem menuScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,19 +16,12 @@ public class powerUpScript : MonoBehaviour
     {
         
     }
+
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collision with thing");
         if (collision.gameObject.name == "player")
         {
-            Debug.Log("collision with player");
-            StartCoroutine(playerScr.applyPowerUp(gameObject.name.Replace("_icon", "")));
-            Destroy(gameObject, 0);
+            menuScript.die();
         }
-    }
-
-    public void rotate()
-    {
-
     }
 }

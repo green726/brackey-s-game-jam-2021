@@ -14,12 +14,24 @@ public class menuSystem : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject sensSlider;
     public GameObject sensText;
-    void start()
+    public TextMeshProUGUI winGameText;
+    public GameObject winGameMenu;
+    public stopWatch timeScript;
+    public GameObject uiMenu;
+    public GameObject deathMenu;
+
+    void Start()
     {
-        escMenu = GameObject.Find("escapeMenu");
-        player = GameObject.Find("playerMain");
+
+
+        sensText.GetComponent<TMP_InputField>().text = plScript.mouseSens.ToString();
+        sensSlider.GetComponent<Slider>().value = plScript.mouseSens;
+        escMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        winGameMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         //get player script component
-        
+        ResumeGame();
         //escMenu.SetActive(false);
     }
 
@@ -36,6 +48,7 @@ public class menuSystem : MonoBehaviour
 
     public void closeEsc()
     {
+        closeOptions();
         escMenuOpen = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -50,6 +63,7 @@ public class menuSystem : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         plScript.isPaused = true;
+        Debug.Log(escMenu);
         escMenu.SetActive(true);
         PauseGame();
     }
@@ -97,10 +111,36 @@ public class menuSystem : MonoBehaviour
 
     public void saveGameStart()
     {
-        saveGame.performSave(player.GetComponent<playerScript>());
+        saveGame.performSave(plScript);
     }
 
+    public void winGame()
+    {
+        Debug.Log("won gane");
+        PauseGame();
+        winGameMenu.SetActive(true);
+        uiMenu.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        timeScript.wonGame = true;
+        winGameText.text = "You beat the level! your time was:" + timeScript.timePassed;
+        saveGameStart();
+    }
+    public void die()
+    {
+        PauseGame();
+        deathMenu.SetActive(true);
+        uiMenu.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
 
-  
-
+    public void restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void nextLevel()
+    {
+        SceneManager.LoadScene(plScript.playerLevelString);
+    }
 }

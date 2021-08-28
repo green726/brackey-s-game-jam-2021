@@ -12,6 +12,7 @@ public static class saveGame
     public static void performSave(playerScript player)
     {
         Debug.Log("starting save");
+        Debug.Log(player.mouseSens);
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.secret";
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -34,7 +35,7 @@ public static class saveGame
 
             playerData gameData = formatter.Deserialize(stream) as playerData;
             stream.Close();
-
+            Debug.Log(gameData.playerSensSave);
             return gameData;
         }
         else

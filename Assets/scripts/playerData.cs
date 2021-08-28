@@ -8,11 +8,13 @@ public class playerData
 {
     public string playerLevelString;
     public int playerLevelInt;
+    public float playerSensSave;
     public string[] unlockedPowerUps;
 
     public playerData(playerScript player) {
         playerLevelString = player.playerLevelString;
         playerLevelInt = player.playerLevelInt;
+        playerSensSave = player.mouseSens;
     }
 
  

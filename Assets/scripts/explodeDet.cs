@@ -30,18 +30,37 @@ public class explodeDet : MonoBehaviour
         if (playerLeft == true)
         {
             Debug.Log("started distance check");
-            if (Vector3.Distance(playerOb.transform.position, transf.position) >= 6f)
+            if (gameObject.name.Contains("pipe"))
             {
-               // Debug.Log("passed distance check");
-               // Debug.Log(otherGameOb);
-                otherGameOb.SetActive(true);
-                gameObject.SetActive(false);
-                foreach (Transform t in otherGameOb.transform)
+                if (Vector3.Distance(playerOb.transform.position, transf.position) >= 20f)
                 {
-                    t.gameObject.GetComponent<explodeCreate>().explodeThis();
-                }
+                    // Debug.Log("passed distance check");
+                    // Debug.Log(otherGameOb);
+                    otherGameOb.SetActive(true);
+                    gameObject.SetActive(false);
+                    foreach (Transform t in otherGameOb.transform)
+                    {
+                        t.gameObject.GetComponent<explodeCreate>().explodeThis();
+                    }
 
+                }
             }
+            else
+            {
+                if (Vector3.Distance(playerOb.transform.position, transf.position) >= 10f)
+                {
+                    // Debug.Log("passed distance check");
+                    // Debug.Log(otherGameOb);
+                    otherGameOb.SetActive(true);
+                    gameObject.SetActive(false);
+                    foreach (Transform t in otherGameOb.transform)
+                    {
+                        t.gameObject.GetComponent<explodeCreate>().explodeThis();
+                    }
+
+                }
+            }
+       
         }
     }
 

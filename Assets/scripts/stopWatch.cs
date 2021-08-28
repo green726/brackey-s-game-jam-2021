@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine.UI;
 public class stopWatch : MonoBehaviour
 {
-    private float timePassed;
+    public float timePassed;
     public TextMeshProUGUI stopWatchText;
+    public bool wonGame = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,11 @@ public class stopWatch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timePassed += 1 * Time.deltaTime;
+        if (wonGame == false)
+        {
+            timePassed += 1 * Time.deltaTime;
+        }
+
         stopWatchText.text = "Time:" + timePassed;
     }
 

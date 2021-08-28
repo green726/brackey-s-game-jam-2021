@@ -2,33 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class powerUpScript : MonoBehaviour
+public class winScript : MonoBehaviour
 {
     public playerScript playerScr;
+    public menuSystem menuScript;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collision with thing");
         if (collision.gameObject.name == "player")
         {
-            Debug.Log("collision with player");
-            StartCoroutine(playerScr.applyPowerUp(gameObject.name.Replace("_icon", "")));
-            Destroy(gameObject, 0);
+            if (playerScr.playerLevelInt < 5)
+            {
+                playerScr.playerLevelInt += 1;
+                playerScr.playerLevelString = "game" + playerScr.playerLevelInt;
+            }
+            
+            menuScript.winGame();
         }
     }
 
-    public void rotate()
-    {
-
-    }
 }

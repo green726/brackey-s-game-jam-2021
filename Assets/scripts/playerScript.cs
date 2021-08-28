@@ -63,16 +63,16 @@ public class playerScript : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject sensSlider;
     public GameObject sensText;
-    
-    
+    public GameObject winGameMenu;
+    public GameObject deathMenu;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerData gameData = saveGame.loadGameData();
+        mouseSens = gameData.playerSensSave;
         stamina = 100f;
-        escMenu.SetActive(false);
-        optionsMenu.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cam = GameObject.Find("playerCam");
@@ -98,7 +98,7 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       // Debug.Log(mouseSens);
         sprinting = false;
         //groundChecking
         touchingGround = Physics.CheckSphere(bottom.position, .1f, groundLMask);
@@ -128,8 +128,8 @@ public class playerScript : MonoBehaviour
 
 
         //mouse input and player rotation
-        float mouseX = Input.GetAxis("Mouse X") * mouseSens;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSens * 1f;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSens * 1f;
 
         virCam.m_Lens.Dutch = wallRunCamTilt;
         pov.m_HorizontalAxis.m_InputAxisValue = mouseX;

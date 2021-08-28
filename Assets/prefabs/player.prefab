@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 1409795243773091861}
   - component: {fileID: 7720711636973831325}
   - component: {fileID: 7756174829884614986}
+  - component: {fileID: 3413462826477465780}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -171,6 +172,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   virCam: {fileID: 0}
   pov: {fileID: 0}
+  timeScript: {fileID: 3413462826477465780}
   touchingGround: 0
   bottom: {fileID: 5050416304381642366}
   groundLMask:
@@ -180,11 +182,12 @@ MonoBehaviour:
   wallJumpOffSpeed: 7
   wallJumpUpOffSpeed: 1
   slideSpeed: 10
-  stamina: 25
+  stamina: 100
   staminaDisplay: {fileID: 0}
   sprinting: 0
   sliding: 0
-  rb: {fileID: 0}
+  playerSpeedState: norm
+  rb: {fileID: 1409795243773091861}
   coll: {fileID: 0}
   head: {fileID: 7756174828138687793}
   wallMask:
@@ -202,6 +205,8 @@ MonoBehaviour:
   optionsMenu: {fileID: 0}
   sensSlider: {fileID: 0}
   sensText: {fileID: 0}
+  winGameMenu: {fileID: 0}
+  deathMenu: {fileID: 0}
 --- !u!54 &1409795243773091861
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -251,6 +256,26 @@ MonoBehaviour:
   optionsMenu: {fileID: 0}
   sensSlider: {fileID: 0}
   sensText: {fileID: 0}
+  winGameText: {fileID: 0}
+  winGameMenu: {fileID: 0}
+  timeScript: {fileID: 3413462826477465780}
+  uiMenu: {fileID: 0}
+  deathMenu: {fileID: 0}
+--- !u!114 &3413462826477465780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756174829884614987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634e71dbed3c48f498d672f0fc6b07ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timePassed: 0
+  stopWatchText: {fileID: 0}
+  wonGame: 0
 --- !u!1 &8124893793190972446
 GameObject:
   m_ObjectHideFlags: 0
