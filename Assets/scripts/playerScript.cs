@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 //TODO: when slide move the head position down, and back up after slide finish
 public class playerScript : MonoBehaviour
 {
+
     //save game vars, 
     //Int = the integer value of player level, string = name of scene player is on, pUps = array of unlocked gadgets/power ups
     public int playerLevelInt;
@@ -23,6 +24,7 @@ public class playerScript : MonoBehaviour
     public GameObject cam;
     public CinemachineVirtualCamera virCam;
     public CinemachinePOV pov;
+    public stopWatch timeScript;
     //is the player touching the ground?
     public bool touchingGround;
     //the transform of the bottom of the player
@@ -40,6 +42,7 @@ public class playerScript : MonoBehaviour
     //more movement
     public bool sprinting = false;
     public bool sliding = false;
+    public string playerSpeedState = "norm";
     //more necessary values, head = transform of top of player
     public Rigidbody rb;
     public CapsuleCollider coll;
@@ -60,7 +63,7 @@ public class playerScript : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject sensSlider;
     public GameObject sensText;
- 
+    
     
 
 
@@ -89,7 +92,6 @@ public class playerScript : MonoBehaviour
             playerLevelInt = 99;
         }
         
-        Debug.Log(playerLevelInt);
         
     }
 
@@ -195,13 +197,35 @@ public class playerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && touchingGround == true && stamina >= 4)
         {
             sprinting = true;
-            speedMult = 12f;
+            if (playerSpeedState == "norm")
+            {
+                speedMult = 12f;
+            }
+            else if (playerSpeedState == "fast")
+            {
+                speedMult = 14f;
+            }
+            else if (playerSpeedState == "slow")
+            {
+                speedMult = 8f;
+            }
             stamina -= 4f * Time.deltaTime * 3;
         }
 
         if (sprinting == false)
         {
-            speedMult = 7f;
+            if (playerSpeedState == "norm")
+            {
+                speedMult = 7f;
+            }
+            else if (playerSpeedState == "fast")
+            {
+                speedMult = 10f;
+            }
+            else if (playerSpeedState == "slow")
+            {
+                speedMult = 4f;
+            }
         }
 
         //sliding
@@ -317,6 +341,41 @@ public class playerScript : MonoBehaviour
         {
             rb.MovePosition(transform.position + moveAmount * Time.deltaTime * speedMult);
 
+        }
+    }
+
+    public IEnumerator applyPowerUp(string pUpName)
+    {
+        Debug.Log("powerup:" + pUpName);
+        if (pUpName.Contains("jump"))
+        {
+            jumpSpeed = 8f;
+            yield return new WaitForSeconds(10);
+            jumpSpeed = 6f;
+        }
+        else if (pUpName.Contains("slow_down"))
+        {
+            playerSpeedState = "slow";
+            speedMult = 4f;
+            yield return new WaitForSeconds(5);
+            speedMult = 7f;
+            playerSpeedState = "norm";
+        }
+        else if (pUpName.Contains("speed"))
+        {
+            speedMult = 10f;
+            playerSpeedState = "fast";
+            yield return new WaitForSeconds(10);
+            playerSpeedState = "norm";
+            speedMult = 7f;
+        } else if (pUpName.Contains("stamina"))
+        {
+            stamina = 1000f;
+            yield return new WaitForSeconds(10);
+            stamina = 100f;
+        } else if (pUpName.Contains("time_minus"))
+        {
+            timeScript.removeTime(10);
         }
     }
 }
