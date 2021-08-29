@@ -49,9 +49,9 @@ public class playerScript : MonoBehaviour
     public Transform head;
     //wallrunning
     public LayerMask wallMask;
-    public float wallRunForce = 3f;
+    public float wallRunForce = 1.2f;
     public float maxWallRunTime;
-    public float maxWallRunSpeed = 5f;
+    public float maxWallRunSpeed = 3f;
     bool isWallLeft, isWallRight, isWallRunning;
     public float maxWallrunCamTilt, wallRunCamTilt;
     public Transform orient;
@@ -70,7 +70,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxWallRunSpeed = 5f;
+        maxWallRunSpeed = 3f;
         playerData gameData = saveGame.loadGameData();
         mouseSens = gameData.playerSensSave;
         stamina = 100f;
