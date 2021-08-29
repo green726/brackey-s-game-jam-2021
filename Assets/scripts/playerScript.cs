@@ -33,8 +33,8 @@ public class playerScript : MonoBehaviour
     public LayerMask groundLMask;
     //more movement
     public float jumpSpeed = 6f;
-    public float wallJumpOffSpeed = 7f;
-    public float wallJumpUpOffSpeed = 1f;
+    public float wallJumpOffSpeed = 10f;
+    public float wallJumpUpOffSpeed = 10f;
     public float slideSpeed = 10f;
     public float stamina = 25f;
     //UI
@@ -49,9 +49,9 @@ public class playerScript : MonoBehaviour
     public Transform head;
     //wallrunning
     public LayerMask wallMask;
-    public float wallRunForce = 6f;
+    public float wallRunForce = 3f;
     public float maxWallRunTime;
-    public float maxWallRunSpeed = 7f;
+    public float maxWallRunSpeed = 5f;
     bool isWallLeft, isWallRight, isWallRunning;
     public float maxWallrunCamTilt, wallRunCamTilt;
     public Transform orient;
@@ -70,6 +70,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxWallRunSpeed = 5f;
         playerData gameData = saveGame.loadGameData();
         mouseSens = gameData.playerSensSave;
         stamina = 100f;
@@ -91,21 +92,33 @@ public class playerScript : MonoBehaviour
         {
             playerLevelInt = 99;
         }
-        
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       // Debug.Log(mouseSens);
+        if (isWallRunning)
+        {
+            rb.AddForce(orient.up * wallRunForce);
+            rb.AddForce(orient.forward * wallRunForce);
+            if (isWallRight)
+            {
+                rb.AddForce(orient.right * wallRunForce);
+            }
+            else if (isWallLeft)
+            {
+                rb.AddForce(-orient.right * wallRunForce);
+            }
+        }
         sprinting = false;
         //groundChecking
         touchingGround = Physics.CheckSphere(bottom.position, .1f, groundLMask);
 
         //wall run:
         checkForWall();
-        wallRunInput();
+        // wallRunInput();
         //wall run cam tilt activate
         if (Mathf.Abs(wallRunCamTilt) < maxWallrunCamTilt && isWallRunning && isWallRight)
         {
@@ -134,13 +147,13 @@ public class playerScript : MonoBehaviour
         virCam.m_Lens.Dutch = wallRunCamTilt;
         pov.m_HorizontalAxis.m_InputAxisValue = mouseX;
         pov.m_VerticalAxis.m_InputAxisValue = mouseY;
-        
+
         Quaternion rotateAmount = Quaternion.Euler(0, pov.m_HorizontalAxis.Value, 0);
         transform.rotation = rotateAmount;
 
 
-        
-         
+
+
         //stamina
         if (stamina < 0f)
         {
@@ -160,7 +173,7 @@ public class playerScript : MonoBehaviour
             //grounded jump
             if (touchingGround == true && isWallRunning == false)
             {
-                rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
+                rb.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);
                 stamina -= 10f;
             }
             //wall jump
@@ -170,24 +183,24 @@ public class playerScript : MonoBehaviour
                 if (isWallLeft && !Input.GetKey(KeyCode.D) || isWallRight && !Input.GetKey(KeyCode.A))
                 {
                     Debug.Log("normal jump");
-                    if (isWallRight) rb.AddForce(-orient.right * 4f);
-                    if (isWallLeft) rb.AddForce(orient.right * 4f);
-                    rb.AddForce(Vector3.up * wallJumpUpOffSpeed);
-                   
+                    if (isWallRight) rb.AddForce(-transform.right * 4f, ForceMode.Impulse);
+                    if (isWallLeft) rb.AddForce(transform.right * 4f, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * wallJumpUpOffSpeed, ForceMode.Impulse);
+
                 }
                 //if wall is right and holding left jump left
                 if (isWallRight && Input.GetKey(KeyCode.A))
                 {
                     Debug.Log("side jump");
-                    rb.AddForce(orient.up * wallJumpUpOffSpeed);
-                    rb.AddForce(-orient.right * wallJumpOffSpeed);
+                    rb.AddForce(transform.up * wallJumpUpOffSpeed, ForceMode.Impulse);
+                    rb.AddForce(-transform.right * wallJumpOffSpeed, ForceMode.Impulse);
                 }
                 //if wall is left and holding right jump right
                 if (isWallLeft && Input.GetKey(KeyCode.D))
                 {
                     Debug.Log("side jump");
-                    rb.AddForce(orient.up * wallJumpUpOffSpeed);
-                    rb.AddForce(orient.right * wallJumpOffSpeed);
+                    rb.AddForce(transform.up * wallJumpUpOffSpeed, ForceMode.Impulse);
+                    rb.AddForce(transform.right * wallJumpOffSpeed, ForceMode.Impulse);
                 }
             }
             //double jump goes beneath here
@@ -233,14 +246,14 @@ public class playerScript : MonoBehaviour
         {
             playerSlide();
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Mouse4))
+        if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.Mouse4))
         {
             playerEndSlide();
         }
 
         void playerSlide()
         {
-         
+
             sliding = true;
             coll.height = 1;
             Vector3 headDown = new Vector3(0, -.7f, 0);
@@ -264,48 +277,47 @@ public class playerScript : MonoBehaviour
             if (menuScript.escMenuOpen == true)
             {
                 menuScript.closeEsc();
-            } else if (menuScript.escMenuOpen == false)
+            }
+            else if (menuScript.escMenuOpen == false)
             {
                 menuScript.openEsc();
             }
-            
+
         }
 
 
-        
+
 
     }
-  
-  //function to get player input and call wall run start
+
+    //function to get player input and call wall run start
     public void wallRunInput()
     {
         if (Input.GetKey(KeyCode.D) && isWallRight)
         {
             startWallRun();
+
         }
         if (Input.GetKey(KeyCode.A) && isWallLeft)
         {
+
             startWallRun();
+
         }
     }
     //function to start wall run
     public void startWallRun()
     {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        touchingGround = false;
         rb.useGravity = false;
         isWallRunning = true;
 
-        if (rb.velocity.magnitude <= maxWallRunSpeed)
-        {
-            rb.AddForce(orient.forward * wallRunForce * Time.deltaTime);
+        //if (rb.velocity.magnitude <= maxWallRunSpeed)
+        //{
 
-            if (isWallRight)
-            {
-                rb.AddForce(orient.right * wallRunForce * Time.deltaTime);
-            } else if (isWallLeft)
-            {
-                rb.AddForce(-orient.right * wallRunForce * Time.deltaTime);
-            }
-        }
+        // }
     }
     //end wall run function
     public void stopWallRun()
@@ -317,8 +329,8 @@ public class playerScript : MonoBehaviour
     public void checkForWall()
     {
         //wall bools
-        isWallRight = Physics.Raycast(transform.position, orient.right, 1f, wallMask);
-        isWallLeft = Physics.Raycast(transform.position, -orient.right, 1f, wallMask);
+        isWallRight = Physics.Raycast(transform.position, transform.right, 1f, wallMask);
+        isWallLeft = Physics.Raycast(transform.position, -transform.right, 1f, wallMask);
         //code to call leave wall run
         if (!isWallLeft && !isWallRight)
         {
@@ -330,18 +342,20 @@ public class playerScript : MonoBehaviour
 
     void FixedUpdate()
     {
-            //player movement
-        
-                float xVal = Input.GetAxis("Horizontal");
-                float zVal = Input.GetAxis("Vertical");
+        //player movement
+        wallRunInput();
+        float xVal = Input.GetAxis("Horizontal");
+        float zVal = Input.GetAxis("Vertical");
 
-                Vector3 moveAmount = transform.right * xVal + transform.forward * zVal;
+        Vector3 moveAmount = transform.right * xVal + transform.forward * zVal;
 
         if (sliding == false)
         {
             rb.MovePosition(transform.position + moveAmount * Time.deltaTime * speedMult);
 
         }
+
+
     }
 
     public IEnumerator applyPowerUp(string pUpName)
@@ -368,12 +382,14 @@ public class playerScript : MonoBehaviour
             yield return new WaitForSeconds(10);
             playerSpeedState = "norm";
             speedMult = 7f;
-        } else if (pUpName.Contains("stamina"))
+        }
+        else if (pUpName.Contains("stamina"))
         {
             stamina = 1000f;
             yield return new WaitForSeconds(10);
             stamina = 100f;
-        } else if (pUpName.Contains("time_minus"))
+        }
+        else if (pUpName.Contains("time_minus"))
         {
             timeScript.removeTime(10);
         }

@@ -1337,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bdb7bf0eefe4de5499811feed82f898b, type: 3}
       propertyPath: m_Name
-      value: pipe_fractured
+      value: pipe_fractured Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdb7bf0eefe4de5499811feed82f898b, type: 3}

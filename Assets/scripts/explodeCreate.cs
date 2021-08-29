@@ -30,7 +30,7 @@ public class explodeCreate : MonoBehaviour
                 rb.mass = .1f;
                 int explForce = Random.Range(minExForce, maxExForce);
                 rb.AddExplosionForce(explForce, transform.position, explRadius);
-                Destroy(gameObject, 5);
+                //Destroy(gameObject, 5);
             }
         
     }
