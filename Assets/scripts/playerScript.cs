@@ -12,13 +12,17 @@ public class playerScript : MonoBehaviour
 
     //save game vars, 
     //Int = the integer value of player level, string = name of scene player is on, pUps = array of unlocked gadgets/power ups
+    [System.NonSerialized]
     public int playerLevelInt;
+    [System.NonSerialized]
     public string playerLevelString;
     public Scene currentScene;
     public string[] collectedPowerUps;
     //player look and movement
     public float baseSensMult = 100;
+    [System.NonSerialized]
     public float speedMult = 7;
+    [System.NonSerialized]
     public float mouseSens = 1;
     //some necessary objects
     public GameObject cam;
@@ -32,11 +36,16 @@ public class playerScript : MonoBehaviour
     //layer mask for ground
     public LayerMask groundLMask;
     //more movement
-    public float jumpSpeed = 6f;
-    public float wallJumpOffSpeed = 10f;
-    public float wallJumpUpOffSpeed = 10f;
+    [System.NonSerialized]
+    public float jumpSpeed = 5f;
+    [System.NonSerialized]
+    public float wallJumpOffSpeed = 2f;
+    [System.NonSerialized]
+    public float wallJumpUpOffSpeed = 2f;
+    [System.NonSerialized]
     public float slideSpeed = 10f;
-    public float stamina = 25f;
+    [System.NonSerialized]
+    float stamina = 40f;
     //UI
     public TextMeshProUGUI staminaDisplay;
     //more movement
@@ -73,7 +82,6 @@ public class playerScript : MonoBehaviour
         maxWallRunSpeed = 3f;
         playerData gameData = saveGame.loadGameData();
         mouseSens = gameData.playerSensSave;
-        stamina = 100f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cam = GameObject.Find("playerCam");
@@ -160,7 +168,7 @@ public class playerScript : MonoBehaviour
             stamina = 0f;
         }
 
-        if (stamina < 100f)
+        if (stamina < 40f)
         {
             stamina += 2f * Time.deltaTime * 4;
         }
@@ -360,18 +368,18 @@ public class playerScript : MonoBehaviour
 
     public IEnumerator applyPowerUp(string pUpName)
     {
-        Debug.Log("powerup:" + pUpName);
+        pUpName = pUpName.Replace(" Variant", "");
         if (pUpName.Contains("jump"))
         {
             jumpSpeed = 8f;
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(10f);
             jumpSpeed = 6f;
         }
         else if (pUpName.Contains("slow_down"))
         {
             playerSpeedState = "slow";
             speedMult = 4f;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(5f);
             speedMult = 7f;
             playerSpeedState = "norm";
         }
@@ -379,19 +387,19 @@ public class playerScript : MonoBehaviour
         {
             speedMult = 10f;
             playerSpeedState = "fast";
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(10f);
             playerSpeedState = "norm";
             speedMult = 7f;
         }
         else if (pUpName.Contains("stamina"))
         {
-            stamina = 1000f;
-            yield return new WaitForSeconds(10);
-            stamina = 100f;
+            stamina = 120f;
+            yield return new WaitForSeconds(10f);
+            stamina = 40f;
         }
         else if (pUpName.Contains("time_minus"))
         {
-            timeScript.removeTime(10);
+            timeScript.removeTime(10f);
         }
     }
 }

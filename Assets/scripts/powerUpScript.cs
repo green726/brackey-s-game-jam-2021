@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class powerUpScript : MonoBehaviour
 {
-    public playerScript playerScr;
+    //public playerScript playerScr;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +19,11 @@ public class powerUpScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision with thing");
-        if (collision.gameObject.name == "player")
+        if (collision.gameObject.TryGetComponent(out playerScript player))
         {
             Debug.Log("collision with player");
-            StartCoroutine(playerScr.applyPowerUp(gameObject.name.Replace("_icon", "")));
-            Destroy(gameObject, 0);
+            player.StartCoroutine(player.applyPowerUp(gameObject.name.Replace("_icon", "")));
+            gameObject.SetActive(false);
         }
     }
 

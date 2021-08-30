@@ -2683,14 +2683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808e3e71391ae1c4dbee986b4ba3df37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLevelInt: 0
-  playerLevelString: 
   currentScene:
     m_Handle: 0
   collectedPowerUps: []
   baseSensMult: 10
-  speedMult: 6
-  mouseSens: 1
   cam: {fileID: 0}
   virCam: {fileID: 0}
   pov: {fileID: 0}
@@ -2700,11 +2696,6 @@ MonoBehaviour:
   groundLMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpSpeed: 6
-  wallJumpOffSpeed: 7
-  wallJumpUpOffSpeed: 1
-  slideSpeed: 6
-  stamina: 100
   staminaDisplay: {fileID: 0}
   sprinting: 0
   sliding: 0
@@ -3564,7 +3555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9083259965007418438, guid: be7796cbc54046f41a9cd7e54e348056, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21417375
+      value: 0.476
       objectReference: {fileID: 0}
     - target: {fileID: 9083259965007418438, guid: be7796cbc54046f41a9cd7e54e348056, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4080,6 +4071,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1412730934}
     - target: {fileID: 7756174828435122494, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
+      propertyPath: stamina
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756174828435122494, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: sensText
       value: 
       objectReference: {fileID: 246074403}
@@ -4089,7 +4084,7 @@ PrefabInstance:
       objectReference: {fileID: 439604926}
     - target: {fileID: 7756174828435122494, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: jumpSpeed
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7756174828435122494, guid: 42c8207674ae5fd4b99e247a65fd48d8, type: 3}
       propertyPath: sensSlider
