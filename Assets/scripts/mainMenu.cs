@@ -42,7 +42,7 @@ public class mainMenu : MonoBehaviour
             //get the level int from the button name, do this by removing "button" and "game"
             int buttonLevel = int.Parse(buttonOb.name.Replace("game", "").Replace("Button", ""));
             //if the button level is less than or equal to player level unlock it
-            if (buttonLevel <= gameData.playerLevelInt)
+            if (buttonLevel <= gameData.playerLevelInt && buttonLevel <= 1)
             {
                 buttonOb.GetComponent<Button>().interactable = true;
             }

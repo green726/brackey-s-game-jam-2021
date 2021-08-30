@@ -17,12 +17,13 @@ public class stopWatch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (wonGame == false)
         {
             timePassed += 1 * Time.deltaTime;
         }
-
-        stopWatchText.text = "Time:" + timePassed;
+        float timeDisplay = Mathf.Round(timePassed * 100) / 100;
+        stopWatchText.text = "Time:" + timeDisplay;
     }
 
     public void removeTime(float removeAmount)
