@@ -81,10 +81,12 @@ public class playerScript : MonoBehaviour
     {
         maxWallRunSpeed = 3f;
         playerData gameData = saveGame.loadGameData();
-        mouseSens = gameData.playerSensSave;
+        //mouseSens = gameData.playerSensSave;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        cam = GameObject.Find("playerCam");
+        //the below line of code doesn't seem to work
+        //cam = GameObject.Find("playerCam");
+        Debug.Log(cam);
         virCam = cam.GetComponent<CinemachineVirtualCamera>();
         pov = virCam.GetCinemachineComponent<CinemachinePOV>();
         rb = GetComponent<Rigidbody>();
@@ -149,8 +151,8 @@ public class playerScript : MonoBehaviour
 
 
         //mouse input and player rotation
-        float mouseX = Input.GetAxis("Mouse X") * mouseSens * 1f;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSens * 1f;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
 
         virCam.m_Lens.Dutch = wallRunCamTilt;
         pov.m_HorizontalAxis.m_InputAxisValue = mouseX;
